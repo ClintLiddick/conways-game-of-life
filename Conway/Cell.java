@@ -11,8 +11,17 @@ class Cell implements Comparable<Cell> {
 	Cell(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.state = CellState.ALIVE;
-		adj = new ArrayList<Cell>();
+		this.state = CellState.DEAD;
+		adj = new ArrayList<Cell>(8);
+	}
+
+	int numAliveAdjacent() {
+		int alive = 0;
+		for (Cell c : adj) {
+			if (c.state == CellState.ALIVE)
+				alive++;
+		}
+		return alive;
 	}
 
 	public String toString() {
@@ -39,4 +48,4 @@ class Cell implements Comparable<Cell> {
 	}
 }
 
-enum CellState { ALIVE, DYING };
+enum CellState { ALIVE, DYING, DEAD };

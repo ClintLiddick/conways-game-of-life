@@ -11,25 +11,34 @@ class ConwayBoard {
 	private static final int BOARD_HEIGHT = 30;	
 	private List<Cell> board;
 
-	ConwayBoard(int seed_cells) {
+	ConwayBoard(int width, int height) {
 		this.board = new LinkedList<Cell>();
+		for (int y=0; y<height; y++) {
+			for (int x=0; x<width; x++) {
+				this.insertCell(new Cell(x,y));
+			}
+		}
+	}
+
+	ConwayBoard(int seed_cells) {
+		this(BOARD_WIDTH,BOARD_HEIGHT);
 		// seed random cells
 		Random rand = new Random();
 		for (int i=0; i<seed_cells; i++) {
-			Cell newCell = new Cell(rand.nextInt(BOARD_WIDTH),
-									rand.nextInt(BOARD_HEIGHT));
-			this.insertCell(newCell);
+			int index = rand.nextInt(board.size());
+			this.board.get(index).state = CellState.ALIVE;
 		}
 	}
 
 	ConwayBoard() {
-		this.board = new LinkedList<Cell>();
+		this(BOARD_WIDTH,BOARD_HEIGHT);
 		// default seed
-		this.insertCell(new Cell(30,15));
-		this.insertCell(new Cell(31,15));
-		this.insertCell(new Cell(30,16));
-		this.insertCell(new Cell(32,15));
-		this.insertCell(new Cell(30,19));		
+		// this.insertCell(new Cell(30,15));
+		// this.insertCell(new Cell(31,15));
+		// this.insertCell(new Cell(30,16));
+		// this.insertCell(new Cell(32,15));
+		// this.insertCell(new Cell(30,19));
+		this.board.get(200).state = CellState.ALIVE;		
 	}
 
 	// inserts a cell into the board array in sorted order
@@ -73,26 +82,26 @@ class ConwayBoard {
 
 	public void markForDeath() {
 		for (Cell c : board) {
-			int size = c.adj.size();
-			if (size > 3 || size < 2) {
+			int alive = c.numAliveAdjacent();
+			if (alive > 3 || alive < 2) {
 				c.state = CellState.DYING;
 			}
 		}
 	}
 
 	public void killCells() {
-		ListIterator<Cell> itr1 = board.listIterator();
-		while (itr1.hasNext()) {
-			Cell c = itr1.next();
-			if (c.state == CellState.DYING) {
-				itr1.remove();
-			}
-			ListIterator<Cell> itr2 = c.adj.listIterator();
-			while (itr2.hasNext()) {
-				Cell linked = itr2.next();
-				if (linked.state == CellState.DYING)
-					itr2.remove();
-			}
+		// ListIterator<Cell> itr1 = board.listIterator();
+		// while (itr1.hasNext()) {
+		for (Cell c : this.board) {
+			// Cell c = itr1.next();
+			if (c.state == CellState.DYING)
+				c.state = CellState.DEAD;
+			// ListIterator<Cell> itr2 = c.adj.listIterator();
+			// while (itr2.hasNext()) {
+			// 	Cell linked = itr2.next();
+			// 	if (linked.state == CellState.DYING)
+			// 		;
+			// }
 		}
 	}
 
@@ -102,23 +111,35 @@ class ConwayBoard {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		// int x = 0, y = 0;
 		ListIterator<Cell> itr = this.board.listIterator();
 		Cell curr;
-		if (itr.hasNext()) curr = itr.next();
-		else curr = null;
-		for (int y=0; y<BOARD_HEIGHT; y++) {
-			for (int x=0; x<BOARD_WIDTH; x++) {
-				if (curr != null && curr.y == y && curr.x == x) {
-					sb.append("O");
-					if (itr.hasNext()) curr = itr.next();
-					else curr = null;
-				} else {
-					sb.append(" ");
-				}
-			}
-			sb.append("\n");
+		int index = -1;
+		while(itr.hasNext()) {
+			curr = itr.next();
+			index++;
+			if (curr.state == CellState.ALIVE)
+				sb.append("O");
+			else
+				sb.append(" ");
+
+			if (index % 80 == 0)
+				sb.append("\n");
 		}
+		// if (itr.hasNext()) curr = itr.next();
+		// else curr = null;
+		// for (int y=0; y<BOARD_HEIGHT; y++) {
+		// 	for (int x=0; x<BOARD_WIDTH; x++) {
+		// 		if (curr != null && curr.y == y && curr.x == x 
+		// 			&& curr.state == CellState.ALIVE) {
+		// 			sb.append("O");
+		// 			if (itr.hasNext()) curr = itr.next();
+		// 			else curr = null;
+		// 		} else {
+		// 			sb.append(" ");
+		// 		}
+		// 	}
+		// 	sb.append("\n");
+		// }
 		return sb.toString();
 	}
 

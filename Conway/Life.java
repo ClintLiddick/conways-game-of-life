@@ -1,5 +1,7 @@
 package Conway;
 
+import java.util.Scanner;
+
 public class Life {
 	public static void main(String[] args) {
 		ConwayBoard board;
@@ -10,9 +12,10 @@ public class Life {
 		}
 		board.printBoard();
 		board.markForDeath();
-		System.out.println(board.showCells());
+		// System.out.println(board.showCells());
+		new Scanner(System.in).nextLine();
 		board.killCells();
-		System.out.println(board.showCells());
+		// System.out.println(board.showCells());
 		board.printBoard();
 	}
 }
