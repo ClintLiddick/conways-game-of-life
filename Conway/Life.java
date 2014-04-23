@@ -14,6 +14,5 @@ public class Life {
 		board.killCells();
 		System.out.println(board.showCells());
 		board.printBoard();
-
 	}
 }
