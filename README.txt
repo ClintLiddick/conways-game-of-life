@@ -15,4 +15,4 @@ java Conway.Life <# of random cells>
 java Conway.Life <# rand cells> <# of generations>
 
 The most interesting simulations (for now) come from using approximately 200
-cells over 100 generations.
+cells over 100+ generations.
