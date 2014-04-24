@@ -1,7 +1,5 @@
 package Conway;
 
-import java.util.Scanner;
-
 public class Life {
 	public static void main(String[] args) {
 		ConwayBoard board;
@@ -16,7 +14,6 @@ public class Life {
 				board = new ConwayBoard();
 		}
 
-		Scanner scn = new Scanner(System.in);
 		board.printBoard();
 		for (int i=0; i<generations; i++) {
 			try {

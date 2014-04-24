@@ -24,15 +24,6 @@ class Cell implements Comparable<Cell> {
 		return alive;
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("("+x+","+y+") "+state+", Adj: ");
-		for (Cell c : this.adj) {
-			sb.append("("+c.x+","+c.y+") ");
-		}
-		return sb.toString();
-	}
-
 	public int compareTo(Cell o) {
 		int x = 0;
 		if (this.y > o.y || (this.y == o.y && this.x > o.x))
@@ -45,6 +36,15 @@ class Cell implements Comparable<Cell> {
 	public boolean equals(Object obj) {
 		Cell o = (Cell) obj;
 		return this.x == o.x && this.y == o.y;
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("("+x+","+y+") "+state+", Adj: ");
+		for (Cell c : this.adj) {
+			sb.append("("+c.x+","+c.y+") ");
+		}
+		return sb.toString();
 	}
 }
 
