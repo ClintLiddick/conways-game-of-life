@@ -19,4 +19,4 @@ cells over 100+ generations.
 
 Notes
 -----
-1. The program currently only runs correctly in a 80x31 pixel terminal window.
+1. The program is designed to run in a 80x31 pixel terminal window.
