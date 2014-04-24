@@ -163,3 +163,5 @@ class ConwayBoard {
 		return sb.toString();
 	}
 }
+
+enum Patterns {BLINKER, TOAD, BEACON, PULSAR, GLIDER, LWSS};
