@@ -10,12 +10,12 @@ public class Life {
 		} else {
 			board = new ConwayBoard();
 		}
-		board.printBoard();
-		board.markForDeath();
-		// System.out.println(board.showCells());
-		new Scanner(System.in).nextLine();
-		board.killCells();
-		// System.out.println(board.showCells());
-		board.printBoard();
+		Scanner scn = new Scanner(System.in);
+		for (int i=0; i<10; i++) {
+			board.printBoard();
+			scn.nextLine(); // pause
+			board.updateBoard();
+			board.printBoard();
+		}
 	}
 }

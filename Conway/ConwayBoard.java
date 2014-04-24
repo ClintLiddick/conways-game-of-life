@@ -39,6 +39,16 @@ class ConwayBoard {
 		// this.insertCell(new Cell(32,15));
 		// this.insertCell(new Cell(30,19));
 		this.board.get(200).state = CellState.ALIVE;		
+		this.board.get(201).state = CellState.ALIVE;		
+		this.board.get(202).state = CellState.ALIVE;		
+		// this.board.get(280).state = CellState.ALIVE;		
+	}
+
+	public void updateBoard() {
+		this.markForBirth();
+		this.markForDeath();
+		this.killCells();
+		this.spawnCells();
 	}
 
 	// inserts a cell into the board array in sorted order
@@ -80,16 +90,18 @@ class ConwayBoard {
 		}
 	}
 
-	public void markForDeath() {
+	private void markForDeath() {
 		for (Cell c : board) {
-			int alive = c.numAliveAdjacent();
-			if (alive > 3 || alive < 2) {
-				c.state = CellState.DYING;
+			if (c.state == CellState.ALIVE) {
+				int alive = c.numAliveAdjacent();
+				if (alive > 3 || alive < 2) {
+					c.state = CellState.DYING;
+				}
 			}
 		}
 	}
 
-	public void killCells() {
+	private void killCells() {
 		// ListIterator<Cell> itr1 = board.listIterator();
 		// while (itr1.hasNext()) {
 		for (Cell c : this.board) {
@@ -102,6 +114,21 @@ class ConwayBoard {
 			// 	if (linked.state == CellState.DYING)
 			// 		;
 			// }
+		}
+	}
+
+	private void markForBirth() {
+		for (Cell c : this.board) {
+			if (c.state == CellState.DEAD && c.numAliveAdjacent() == 3) {
+				c.state = CellState.GROWING;
+			}
+		}
+	}
+
+	private void spawnCells() {
+		for (Cell c : this.board) {
+			if (c.state == CellState.GROWING)
+				c.state = CellState.ALIVE;
 		}
 	}
 
@@ -125,21 +152,6 @@ class ConwayBoard {
 			if (index % 80 == 0)
 				sb.append("\n");
 		}
-		// if (itr.hasNext()) curr = itr.next();
-		// else curr = null;
-		// for (int y=0; y<BOARD_HEIGHT; y++) {
-		// 	for (int x=0; x<BOARD_WIDTH; x++) {
-		// 		if (curr != null && curr.y == y && curr.x == x 
-		// 			&& curr.state == CellState.ALIVE) {
-		// 			sb.append("O");
-		// 			if (itr.hasNext()) curr = itr.next();
-		// 			else curr = null;
-		// 		} else {
-		// 			sb.append(" ");
-		// 		}
-		// 	}
-		// 	sb.append("\n");
-		// }
 		return sb.toString();
 	}
 

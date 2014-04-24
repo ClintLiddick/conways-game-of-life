@@ -18,7 +18,7 @@ class Cell implements Comparable<Cell> {
 	int numAliveAdjacent() {
 		int alive = 0;
 		for (Cell c : adj) {
-			if (c.state == CellState.ALIVE)
+			if (c.state == CellState.ALIVE || c.state == CellState.DYING)
 				alive++;
 		}
 		return alive;
@@ -48,4 +48,4 @@ class Cell implements Comparable<Cell> {
 	}
 }
 
-enum CellState { ALIVE, DYING, DEAD };
+enum CellState { GROWING, ALIVE, DYING, DEAD };
