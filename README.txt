@@ -16,3 +16,7 @@ java Conway.Life <# rand cells> <# of generations>
 
 The most interesting simulations (for now) come from using approximately 200
 cells over 100+ generations.
+
+Notes
+-----
+1. The program currently only runs correctly in a 80x31 pixel terminal window.
